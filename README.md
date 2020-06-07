@@ -1,7 +1,5 @@
 # DaggerMultimodule
 
-Steps : 
-
 #### Feature Component
 - Each feature module will consist of its own Component + Module + Scope
 - These feature might depend on certain entities like (database , network, local storage, etc). To include such dependencies we'll add DatabaseComponent, NetworkComponent, XComponent as depencies in FeatureComponent.
