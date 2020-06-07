@@ -3,7 +3,7 @@
 #### Feature Component
 - Each feature module will consist of its own Component + Module + Scope
 - These feature might depend on certain entities like (database , network, local storage, etc). To include such dependencies we'll add DatabaseComponent, NetworkComponent, XComponent as depencies in FeatureComponent.
-- When a dependency is added to feature component, feature component will be the one supplying the dependent component ( CoreComponent). How? Check Dependency Factory
+- When a dependency is added to feature component, it's FeatureComponent's job to supply this dependency. How? Check Dependency Factory
 - Why scoping is important for features? Check FAQ
 
 ~~~ 
@@ -15,7 +15,7 @@ interface FeatureComponent {
 ~~~
 
 #### Core Component (Network, Database, SharePref Components)
-- These can be Network, Database, SharePref, etc. They will consist of their own Component + Module ( No Scope ).
+- These can be Network, Database, SharePref, etc. They will consist of their own Component + Module ( Scope - @Singleton ).
 - All dependencies from such components are usually consumed throughout the lifecycle of the application. So components are marked @Singleton, such that object is created only once per app lifecycle.
 ~~~
 @Component(modules = [NetworkModule::class])
@@ -27,17 +27,12 @@ interface NetworkComponent {
 
 #### Dependency Factory
 - Since Core Component are to be created with @Singleton scoping, they should be binded to applicationContext. 
-- We create a class CoreComponentFactory(creating coreComponent at application level) & an interface CoreComponentProvider (implemented by class to which component is to be binded).
+- We create a class CoreComponentFactory(to create coreComponent at application level) & an interface CoreComponentProvider (implemented by application to provide it's object).
 - Application extends and implements CoreComponentProvider.
-- [IMP]Why all this is needed? Since FeatureComponent have to supply CoreComponent, application class has to implement above classes.
 
         DaggerFeatureComponent.builder()
             .networkComponent(NetworkComponentFactory.provideNetowkrComponent(application)).build()
             .inject(this)
-
-
-
-
 
 
 ##### FAQ
