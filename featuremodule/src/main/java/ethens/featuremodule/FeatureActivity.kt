@@ -2,32 +2,28 @@ package ethens.featuremodule
 
 import android.app.Activity
 import android.os.Bundle
-import ethens.featuremodule.di.DaggerFeatureComponent
-import ethens.network.NetworkComponentFactory
+import dagger.android.support.DaggerAppCompatActivity
 import ethens.network.NetworkObject
 import kotlinx.android.synthetic.main.activity_feature.*
 import javax.inject.Inject
 
-class FeatureActivity : Activity() {
+class FeatureActivity : DaggerAppCompatActivity() {
 
     @Inject
     lateinit var networkData: NetworkObject
 
+    @Inject
+    lateinit var featureObject : String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initDagger()
         setContentView(R.layout.activity_feature)
         initView()
     }
 
-    private fun initDagger() {
-        DaggerFeatureComponent.builder()
-            .networkComponent(NetworkComponentFactory.provideNetowkrComponent(application)).build()
-            .inject(this)
-    }
-
     private fun initView() {
         network_tv.text = networkData.network
+        text.text = featureObject
     }
 
 

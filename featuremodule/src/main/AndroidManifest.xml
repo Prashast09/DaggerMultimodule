@@ -2,6 +2,6 @@
     package="ethens.featuremodule" >
 
     <application>
-        <activity android:name=".FeatureActivity" />
+        <activity android:name="ethens.featuremodule.FeatureActivity" />
     </application>
 </manifest>
